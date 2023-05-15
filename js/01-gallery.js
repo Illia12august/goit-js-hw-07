@@ -1,5 +1,6 @@
 import { galleryItems } from "./gallery-items.js";
 // Change code below this line
+let newInstance = null;
 const list = document.querySelector(".gallery");
 const rar = galleryItems
   .map(
@@ -22,14 +23,22 @@ function onImgClick(e) {
   if (e.target.nodeName !== "IMG") {
     return;
   }
-  const instance = basicLightbox.create(`
-    <img src="${e.target.dataset.source}" width="800" height="600">`);
-  instance.show();
+  const instance = basicLightbox.create(
+    `
+    <img src="${e.target.dataset.source}" width="800" height="600">`,
+    {
+      onClose: (instance) => {
+        window.removeEventListener("keydown", onEscListener);
+      },
+    }
+  );
+  newInstance = instance;
+  newInstance.show();
   const onEscListener = (e) => {
     if (e.code !== "Escape") {
       return;
     }
-    instance.close();
+    newInstance.close();
   };
   window.addEventListener("keydown", onEscListener);
 }

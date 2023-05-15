@@ -12,11 +12,11 @@ const rar = galleryItems
   )
   .join("");
 list.innerHTML = rar;
+const lightbox = new SimpleLightbox(".gallery a", {
+  captionsData: "alt",
+  captionDelay: 250,
+});
 function onImgClick(e) {
   e.preventDefault();
-  const lightbox = new SimpleLightbox(".gallery a", {
-    captionsData: "alt",
-    captionDelay: 250,
-  });
 }
 list.addEventListener("click", onImgClick);
